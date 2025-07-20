@@ -9,7 +9,7 @@ Alunos: Guilherme Ferreira Brandão   231030691
 
 
     A nossa ideia é representar o torneio tribruxo em código, inspirado obviamente no Harry Potter e Cálice de Fogo.         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-    Em nosso torneio é necessário fazer o cadastro de 6 integrantes                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣤⣤⡤⠀⠈⣿⣿⣿⡿⠛⠛⣷⣄⠀⠀
+    Em nosso torneio é necessário fazer o cadastro de 6 integrantes, sendo 3 duplas            ⠀⠀⣤⣤⣤⡤⠀⠈⣿⣿⣿⡿⠛⠛⣷⣄⠀⠀
     e suas respectivas casas, tais como Grifinória, Sonserina, Corvinal              ⠀⠀⠀⠙⣿⣿⣿⡏⠀⠀⢸⣿⣿⡇⠀⠀⢿⣿⣿⣷⠀⠀⣿⣿⣷⡄
     e Lufa-Lufa para participar do torneio.                                         ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⢸⣿⣿⡇⠀⠀⢸⣿⣿⣿⠀⠀⢹⣿⣿⡇
     Logo em seguida eles terão os seus desafios...                                  ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠘⣿⣿⡇⠀⠀⠈⣿⣿⣿⠀⠀⢸⣿⣿⡇
