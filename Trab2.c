@@ -18,12 +18,11 @@ Alunos: Guilherme Ferreira Brandão   231030691
     E no final iremos imprimir a dupla vencedora e                                  ⠀⠀⠉⠛⣿⣿⣿⡟⠉⠁⠀⣿⣿⣿⠀⠀⢸⣿⣿⡿⡇⠀⠀⠀⠀⠀
     a árvore que seria, nesse contexto de torneio o chaveamento.                     ⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⠀⠀⢄⣿⣿⡇⠘⠀⠀⠀⠀⠀
                                                                                    ⠀⠀⠀⠀  ⣿⣿⣿⡇⠀⠀⠀⣿⣿⣿⠀⠀⢸⣿⣿⣷⠀⠀⠀⠀⠀⠀
-                                                                                   ⠀⠀  ⠀⢀⣿⣿⣿⣇⠀⠀⠀⣿⣿⣿⠀⠀⠀⣿⡿⣿⠀⠀⠀⠀⠀⠀
-                                                                                   ⠀⠀  ⠈⠉⠉⠉⠉⠉⠁⢀⡼⠿⠿⢿⣦⡀⠀⢹⡇⠈⠀⠀⠀⠀⠀⠀
+                                                                                    ⠀  ⠀⢀⣿⣿⣿⣇⠀⠀⠀⣿⣿⣿⠀⠀⠀⣿⡿⣿⠀⠀⠀⠀⠀⠀
+                                                                                    ⠀  ⠈⠉⠉⠉⠉⠉⠁⢀⡼⠿⠿⢿⣦⡀⠀⢹⡇⠈⠀⠀⠀⠀⠀⠀
                                                                                    ⠀⠀⠀⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡇⠀⠀⠀
                                                                                    ⠀⠀⠀⠀
 ******************************************************************************/
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +32,12 @@ Alunos: Guilherme Ferreira Brandão   231030691
 
 typedef struct no ArvNo;
 typedef struct arv Arv;
+typedef struct bruxo Bruxo;
+
+struct bruxo{
+    char nome[50];
+    char casa[50];
+};
 
 struct no{
     char nome[50];
@@ -40,16 +45,16 @@ struct no{
     ArvNo *esq;
     ArvNo *dir;
 };
+
 struct arv{
     ArvNo* raiz;
 };
 
 
 //Cria nó na árvore 
-
 ArvNo* criaNo(char Nome[50],char Casa[50], ArvNo* esquerda, ArvNo* direita){
     ArvNo* no = (ArvNo*)malloc(sizeof(ArvNo));
-    strcpy(no->nome, Nome);//O strcpy copia o texto de uma string pra outra
+    strcpy(no->nome, Nome);// O strcpy copia o texto de uma string pra outra
     strcpy(no->casa, Casa);
     no->esq = esquerda;
     no->dir = direita;
@@ -59,7 +64,6 @@ ArvNo* criaNo(char Nome[50],char Casa[50], ArvNo* esquerda, ArvNo* direita){
 
 
 //Cria a árvore 
-
 Arv* criaArv(ArvNo* r){
     Arv* a = (Arv*)malloc(sizeof(Arv));
     a->raiz = r;
@@ -80,7 +84,6 @@ void imprime(ArvNo* r, int nivel){
 
 
 //Libera os nós da árvore
-
 void liberaNo(ArvNo* r){
     if(r != NULL){
         liberaNo(r->esq);
@@ -88,6 +91,19 @@ void liberaNo(ArvNo* r){
         free(r);
     };
 
+};
+
+Bruxo bruxosDeHogwarts[10] = {
+    {"Harry Potter", "Grifinoria"},
+    {"Hermione Granger", "Grifinoria"},
+    {"Rony Weasley", "Grifinoria"},
+    {"Draco Malfoy", "Sonserina"},
+    {"Luna Lovegood", "Corvinal"},
+    {"Cedrico Diggory", "Lufa-Lufa"},
+    {"Severo Snape", "Sonserina"},
+    {"Alvo Dumbledore", "Grifinoria"},
+    {"Ninfadora Tonks", "Lufa-Lufa"},
+    {"Minerva McGonagall", "Grifinoria"}
 };
 
 // Função para sortear o vencedor  e mostrar a historia do torneio
