@@ -50,7 +50,7 @@ struct arv{
 };
 
 
-//Cria nó na árvore 
+//cria nó na árvore 
 ArvNo* criaNo(char Nome[50],char Casa[50], ArvNo* esquerda, ArvNo* direita){
     ArvNo* no = (ArvNo*)malloc(sizeof(ArvNo));
     strcpy(no->bruxo.nome, Nome);// O strcpy copia o texto de uma string pra outra
@@ -58,7 +58,6 @@ ArvNo* criaNo(char Nome[50],char Casa[50], ArvNo* esquerda, ArvNo* direita){
     no->esq = esquerda;
     no->dir = direita;
     return no;
-
 };
 
 
@@ -67,20 +66,7 @@ Arv* criaArv(ArvNo* r){
     Arv* a = (Arv*)malloc(sizeof(Arv));
     a->raiz = r;
     return a;
-
 };
-
-//imprimir 
-void imprime(ArvNo* r, int nivel){
-    if(r != NULL){
-        for(int i=0; i<nivel; i++) printf("  ");
-        printf("Vencedor: %s (%s)\n", r->bruxo.nome, r->bruxo.casa);
-        imprime(r->esq, nivel+1);
-        imprime(r->dir, nivel+1);
-    };
-
-};
-
 
 //Libera os nós da árvore
 void liberaNo(ArvNo* r){
@@ -89,24 +75,65 @@ void liberaNo(ArvNo* r){
         liberaNo(r->dir);
         free(r);
     };
-
 };
 
-// Função para sortear o vencedor  e mostrar a historia do torneio
-void torneio(char* nome1, char* casa1, char* nome3, char* casa3){
-    printf("\n O Torneio TriBruxo sera entre %s da casa %s contra  %s da casa %s \n", nome1, casa1, nome3, casa3);
+// Libera a memória da árvore completa (nós e a estrutura Arv)
+void liberaArv(Arv* a) {
+    if (a != NULL) {
+        liberaNo(a->raiz); // Libera todos os nós
+        free(a);           // Libera o contêiner da árvore
+    }
+}
 
-     printf(" O bruxo  %s da casa %s  esta em um Duelo contra  %s da casa %s \n", nome1, casa1, nome3, casa3);
+//imprimindo em PÓS ORDEM
+void imprimirResultadosPosOrdem(ArvNo* partida, int nivel) {
+    if (partida == NULL) {
+        return;
+    }
+
+    imprimirResultadosPosOrdem(partida->esq, nivel + 1);
+
+    imprimirResultadosPosOrdem(partida->dir, nivel + 1);
+
+    if (partida->esq != NULL && partida->dir != NULL) {
+        // indentação
+        for (int i = 0; i < nivel; i++) {
+            printf("    ");
+        }
+
+        //duelos
+        printf("Rodada: %s vs %s  =>  Vencedor: %s\n",
+               partida->esq->bruxo.nome,
+               partida->dir->bruxo.nome,
+               partida->bruxo.nome);
+    }
+}
+
+void imprimirTorneioCronologico(ArvNo* campeao) {
+    if (campeao == NULL) {
+        printf("Torneio vazio!\n");
+        return;
+    }
+    printf("\n--- Resultados do Torneio (Ordem Cronológica) ---\n\n");
+
+    // recursao 
+    imprimirResultadosPosOrdem(campeao, 0);
+
+
+    printf("\nO grande campeão do Torneio Tribruxo é: %s (%s)!\n", campeao->bruxo.nome, campeao->bruxo.casa);
+}
+
+
+// Função para sortear o vencedor e mostrar a historia do torneio
+void torneio(char* nome1, char* casa1, char* nome2, char* casa2){
 };
 
 void sorteandoVencedor(char* nome1, char* casa1, char* nome2, char* casa2, char* vencedorNome, char* vencedorCasa){
    torneio(nome1, casa1, nome2, casa2);
         if (rand() % 2 == 0) {
-        printf("=> %s venceu o Duelo e Avanca!\n", nome1);
         strcpy(vencedorNome, nome1);
         strcpy(vencedorCasa, casa1);
     } else {
-        printf("=> %s venceu o Duelo e Avanca!\n", nome2);
         strcpy(vencedorNome, nome2);
         strcpy(vencedorCasa, casa2);
     };
@@ -193,45 +220,48 @@ while(vagasPreenchidas < 4) {
     for (int i = 0; i < 6; i++) {
         printf("Participante %d: %s (Casa: %s)\n", i + 1, participantesTorneio[i].nome, participantesTorneio[i].casa);
     }
-
-// Fase 1  com 3 desafios
+// Fase 1 com 3 desafios
  char v1[50], c1[50], v2[50], c2[50], v3[50], c3[50];
-    sorteandoVencedor(participantesTorneio[0].nome, participantesTorneio[0].casa, participantesTorneio[5].nome, participantesTorneio[5].casa, v1, c1);
-    ArvNo* p1 = criaNo(v1, c1, NULL, NULL);
+    ArvNo* no_p0 = criaNo(participantesTorneio[0].nome, participantesTorneio[0].casa, NULL, NULL);
+    ArvNo* no_p1 = criaNo(participantesTorneio[1].nome, participantesTorneio[1].casa, NULL, NULL);
+    sorteandoVencedor(participantesTorneio[0].nome, participantesTorneio[0].casa, participantesTorneio[1].nome, participantesTorneio[1].casa, v1, c1);
+    ArvNo* p1 = criaNo(v1, c1, no_p0, no_p1);
 
+    ArvNo* no_p2 = criaNo(participantesTorneio[2].nome, participantesTorneio[2].casa, NULL, NULL);
+    ArvNo* no_p3 = criaNo(participantesTorneio[3].nome, participantesTorneio[3].casa, NULL, NULL);
     sorteandoVencedor(participantesTorneio[2].nome, participantesTorneio[2].casa, participantesTorneio[3].nome, participantesTorneio[3].casa, v2, c2);
-    ArvNo* p2 = criaNo(v2, c2, NULL, NULL);
+    ArvNo* p2 = criaNo(v2, c2, no_p2, no_p3);
 
-    sorteandoVencedor(participantesTorneio[4].nome, participantesTorneio[4].casa, participantesTorneio[1].nome, participantesTorneio[1].casa, v3, c3);
-    ArvNo* p3 = criaNo(v3, c3, NULL, NULL);
+    ArvNo* no_p4 = criaNo(participantesTorneio[4].nome, participantesTorneio[4].casa, NULL, NULL);
+    ArvNo* no_p5 = criaNo(participantesTorneio[5].nome, participantesTorneio[5].casa, NULL, NULL);
+    sorteandoVencedor(participantesTorneio[4].nome, participantesTorneio[4].casa, participantesTorneio[5].nome, participantesTorneio[5].casa, v3, c3);
+    ArvNo* p3 = criaNo(v3, c3, no_p4, no_p5);
 
     // Sorteando quem vai pra final
     int direto = rand() % 3;
-    int semi1 = (direto + 1) % 3;
-    int semi2 = (direto + 2) % 3;
+    int semi1_idx = (direto + 1) % 3;
+    int semi2_idx = (direto + 2) % 3;
 
+    ArvNo* vencedoresFase1[] = {p1, p2, p3};
+    
     char vSemi[50], cSemi[50];
-    ArvNo* semiEsq = (semi1 == 0) ? p1 : (semi1 == 1) ? p2 : p3;
-    ArvNo* semiDir = (semi2 == 0) ? p1 : (semi2 == 1) ? p2 : p3;
+    ArvNo* semiEsq = vencedoresFase1[semi1_idx];
+    ArvNo* semiDir = vencedoresFase1[semi2_idx];
     sorteandoVencedor(semiEsq->bruxo.nome, semiEsq->bruxo.casa, semiDir->bruxo.nome, semiDir->bruxo.casa, vSemi, cSemi);
     ArvNo* semi = criaNo(vSemi, cSemi, semiEsq, semiDir);
 
-    printf("\n%s avanca direto para a final!\n", (direto == 0) ? p1->bruxo.nome : (direto == 1) ? p2->bruxo.nome : p3->bruxo.nome);
+    printf("\n%s avanca direto para a final!\n", vencedoresFase1[direto]->bruxo.nome);
 
     // A Grande Final
     char vFinal[50], cFinal[50];
-    ArvNo* diretoNo = (direto == 0) ? p1 : (direto == 1) ? p2 : p3;
+    ArvNo* diretoNo = vencedoresFase1[direto];
     sorteandoVencedor(semi->bruxo.nome, semi->bruxo.casa, diretoNo->bruxo.nome, diretoNo->bruxo.casa, vFinal, cFinal);
     ArvNo* final = criaNo(vFinal, cFinal, semi, diretoNo);
 
-    printf("\n____***____  Resultado Final do Torneio Tribruxo ____***____ \n");
-    printf("Campeao do Torneio: %s da casa %s!\n\n", final->bruxo.nome, final->bruxo.casa);
-
+    // arvore + impressao
     Arv* arvoreTorneio = criaArv(final);
-    imprime(arvoreTorneio->raiz, 0);
-    liberaNo(arvoreTorneio->raiz);
-    free(arvoreTorneio); 
-
+    imprimirTorneioCronologico(arvoreTorneio->raiz);
+    liberaArv(arvoreTorneio);
 
  return 0;
 
