@@ -250,8 +250,6 @@ while(vagasPreenchidas < 4) {
     sorteandoVencedor(semiEsq->bruxo.nome, semiEsq->bruxo.casa, semiDir->bruxo.nome, semiDir->bruxo.casa, vSemi, cSemi);
     ArvNo* semi = criaNo(vSemi, cSemi, semiEsq, semiDir);
 
-    printf("\n%s avanca direto para a final!\n", vencedoresFase1[direto]->bruxo.nome);
-
     // A Grande Final
     char vFinal[50], cFinal[50];
     ArvNo* diretoNo = vencedoresFase1[direto];
