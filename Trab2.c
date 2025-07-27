@@ -125,8 +125,11 @@ Bruxo bruxosDeHogwarts[10] = {
     {"Minerva McGonagall", "Grifinoria"}
 };
 
+
+
 int main(){
 
+    
 srand(time(NULL));// Iniciando pra funcionar o rand
 Bruxo bruxoUsuario[2];
 
@@ -224,9 +227,10 @@ while(vagasPreenchidas < 4) {
     printf("\n____***____  Resultado Final do Torneio Tribruxo ____***____ \n");
     printf("Campeao do Torneio: %s da casa %s!\n\n", final->bruxo.nome, final->bruxo.casa);
 
-    imprime(final, 0);
-
-    liberaNo(final);
+    Arv* arvoreTorneio = criaArv(final);
+    imprime(arvoreTorneio->raiz, 0);
+    liberaNo(arvoreTorneio->raiz);
+    free(arvoreTorneio); 
 
 
  return 0;
